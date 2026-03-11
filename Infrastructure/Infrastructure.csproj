@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AppCore\AppCore.csproj" />
+        <ProjectReference Include="..\AppCore\AppCore.csproj"/>
     </ItemGroup>
 
 </Project>

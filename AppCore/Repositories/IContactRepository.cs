@@ -1,5 +1,5 @@
-using AppCore.Entities;
 using AppCore.Dto;
+using AppCore.Entities;
 
 namespace AppCore.Repositories;
 

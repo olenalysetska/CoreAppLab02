@@ -10,8 +10,11 @@ public class Company : Contact
     public int? EmployeeCount { get; set; }
     public decimal? AnnualRevenue { get; set; }
     public string? Website { get; set; }
-    public List<Person> Employees { get; set; } = new();
+    public List<Person> Employees { get; set; } = [];
     public Person? PrimaryContact { get; set; }
 
-    public override string GetDisplayName() => Name;
+    public override string GetDisplayName()
+    {
+        return Name;
+    }
 }

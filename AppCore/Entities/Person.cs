@@ -11,5 +11,8 @@ public class Person : Contact
     public Company? Employer { get; set; }
     public Organization? Organization { get; set; }
 
-    public override string GetDisplayName() => $"{FirstName} {LastName}";
+    public override string GetDisplayName()
+    {
+        return $"{FirstName} {LastName}";
+    }
 }

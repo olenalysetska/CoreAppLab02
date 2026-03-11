@@ -7,9 +7,12 @@ public class Organization : Contact
     public string? KRS { get; set; }
     public string? Website { get; set; }
     public string? Mission { get; set; }
-    
+
     public List<Person> Members { get; set; } = new();
     public Person? PrimaryContact { get; set; }
 
-    public override string GetDisplayName() => Name;
+    public override string GetDisplayName()
+    {
+        return Name;
+    }
 }

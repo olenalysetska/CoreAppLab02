@@ -4,7 +4,6 @@ using AppCore.Repositories;
 
 namespace Infrastructure.Memory;
 
-
 public class MemoryGenericRepository<T> : IGenericRepositoryAsync<T>
     where T : EntityBase
 {
@@ -12,8 +11,11 @@ public class MemoryGenericRepository<T> : IGenericRepositoryAsync<T>
 
     public Task<T?> FindByIdAsync(Guid id)
     {
-        _data.TryGetValue(id, out var value);
-        return Task.FromResult(value);
+        var result = _data
+            .Where(t => t.Key == id)
+            .Select(t => t.Value)
+            .FirstOrDefault();
+        return Task.FromResult(result);
     }
 
     public Task<IEnumerable<T>> FindAllAsync()
@@ -54,11 +56,7 @@ public class MemoryGenericRepository<T> : IGenericRepositoryAsync<T>
 
     public Task RemoveByIdAsync(Guid id)
     {
-        if (!_data.ContainsKey(id))
-            throw new KeyNotFoundException();
-
-        _data.Remove(id);
-
-        return Task.CompletedTask;
+        var removed = _data.Remove(id);
+        return removed ? Task.CompletedTask : throw new KeyNotFoundException();
     }
 }
