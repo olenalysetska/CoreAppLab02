@@ -10,4 +10,12 @@
         <ProjectReference Include="..\AppCore\AppCore.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.0.0" />
+      <PackageReference Include="FluentValidation" Version="10.0.4" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    </ItemGroup>
+
 </Project>
