@@ -1,4 +1,3 @@
-
 using AppCore.Entities;
 using AppCore.Repositories;
 
@@ -9,7 +8,7 @@ public class MemoryCompanyRepository : MemoryGenericRepository<Company>, ICompan
     // Реализуем метод поиска по NIP (ИНН)
     public Task<Company?> GetByNipAsync(string nip)
     {
-        var company = _data.Values.FirstOrDefault(c => c.Nip== nip);
+        var company = _data.Values.FirstOrDefault(c => c.Nip == nip);
         return Task.FromResult(company);
     }
 

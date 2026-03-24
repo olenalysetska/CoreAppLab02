@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // --- СЕКЦИЯ 1: РЕГИСТРАЦИЯ (До builder.Build()) ---
 
 builder.Services.AddControllers(); // Чтобы работали твои контроллеры API
-builder.Services.AddOpenApi();     // Поддержка OpenAPI/Swagger
+builder.Services.AddOpenApi(); // Поддержка OpenAPI/Swagger
 
 // Регистрация твоих хранилищ (Repositories)
 builder.Services.AddSingleton<IPersonRepository, MemoryPersonRepository>();
@@ -27,10 +27,7 @@ var app = builder.Build();
 
 // --- СЕКЦИЯ 3: НАСТРОЙКА ПРАВИЛ (Middleware) ---
 
-if (app.Environment.IsDevelopment()) 
-{
-    app.MapOpenApi();
-}
+if (app.Environment.IsDevelopment()) app.MapOpenApi();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
@@ -39,7 +36,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Тестовый эндпоинт погоды (можно оставить для проверки)
-var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+var summaries = new[]
+    { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
 app.MapGet("/weatherforecast", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>

@@ -11,9 +11,28 @@ public class MemoryContactUnitOfWork(
     public ICompanyRepository Companies => companies;
     public IOrganizationRepository Organizations => organizations;
 
-    public Task<int> SaveChangesAsync() => Task.FromResult(0);
-    public Task BeginTransactionAsync() => Task.CompletedTask;
-    public Task CommitTransactionAsync() => Task.CompletedTask;
-    public Task RollbackTransactionAsync() => Task.CompletedTask;
-    public ValueTask DisposeAsync() => ValueTask.CompletedTask;
+    public Task<int> SaveChangesAsync()
+    {
+        return Task.FromResult(0);
+    }
+
+    public Task BeginTransactionAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task CommitTransactionAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task RollbackTransactionAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        return ValueTask.CompletedTask;
+    }
 }

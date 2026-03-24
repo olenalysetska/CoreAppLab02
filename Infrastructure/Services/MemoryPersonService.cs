@@ -2,7 +2,7 @@ using AppCore.Dto;
 using AppCore.Repositories;
 using AppCore.Services;
 
-namespace Infrastructure.Services; 
+namespace Infrastructure.Services;
 
 public class MemoryPersonService(IContactUnitOfWork unitOfWork) : IPersonService
 {
@@ -12,7 +12,7 @@ public class MemoryPersonService(IContactUnitOfWork unitOfWork) : IPersonService
         var dtos = result.Items.Select(PersonDto.FromEntity).ToList();
         return new PagedResult<PersonDto>(dtos, result.TotalCount, result.Page, result.PageSize);
     }
-    
+
     // Остальные методы  просто добавь пустые с throw new NotImplementedException()
     public async Task<PersonDto?> FindById(Guid id)
     {
@@ -20,7 +20,18 @@ public class MemoryPersonService(IContactUnitOfWork unitOfWork) : IPersonService
         return person == null ? null : PersonDto.FromEntity(person);
     }
 
-    public Task<PersonDto> CreatePerson(CreatePersonDto dto) => throw new NotImplementedException();
-    public Task UpdatePerson(Guid id, UpdatePersonDto dto) => throw new NotImplementedException();
-    public Task DeletePerson(Guid id) => throw new NotImplementedException();
+    public Task<PersonDto> CreatePerson(CreatePersonDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdatePerson(Guid id, UpdatePersonDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeletePerson(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

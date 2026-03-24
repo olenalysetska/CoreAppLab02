@@ -10,7 +10,7 @@ public class ContactsMappingProfile : Profile
     {
         // 1. Из "Человека" в "Карточку" (Person -> PersonDto)
         CreateMap<Person, PersonDto>();
-            // Говорим, как собрать FullName из двух кусков
+        // Говорим, как собрать FullName из двух кусков
 
         // 2. Из "Черновика" в "Человека" (Для создания)
         CreateMap<CreatePersonDto, Person>();
