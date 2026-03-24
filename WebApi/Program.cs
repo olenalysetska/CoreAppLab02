@@ -1,5 +1,6 @@
 using AppCore.Repositories;
 using AppCore.Services;
+using AutoMapper;
 using Infrastructure.Memory;
 using Infrastructure.Services;
 
@@ -20,6 +21,7 @@ builder.Services.AddSingleton<IContactUnitOfWork, MemoryContactUnitOfWork>();
 
 // Регистрация Сервиса
 builder.Services.AddSingleton<IPersonService, MemoryPersonService>();
+builder.Services.AddControllers();
 
 // --- СЕКЦИЯ 2: СБОРКА ПРИЛОЖЕНИЯ (Один раз!) ---
 

@@ -1,3 +1,4 @@
+using AppCore.Dto;
 using AppCore.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,5 +22,29 @@ public class ContactsController(IPersonService service) : ControllerBase
         var person = await service.FindById(id);
         if (person == null) return NotFound();
         return Ok(person);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreatePersonDto dto)
+    {
+        await service.CreatePerson(dto);
+        return Created("api/contacts", dto);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdatePersonDto dto)
+    {
+        var person = await service.FindById(id);
+        if (person == null) return NotFound();
+        
+        await service.UpdatePerson(id, dto);
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await service.DeletePerson(id);
+        return NoContent();
     }
 }

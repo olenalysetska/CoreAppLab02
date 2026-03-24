@@ -1,10 +1,12 @@
 using AppCore.Dto;
+using AppCore.Entities;
 using AppCore.Repositories;
 using AppCore.Services;
+using AutoMapper;
 
 namespace Infrastructure.Services;
 
-public class MemoryPersonService(IContactUnitOfWork unitOfWork) : IPersonService
+public class MemoryPersonService(IContactUnitOfWork unitOfWork, IMapper mapper) : IPersonService
 {
     public async Task<PagedResult<PersonDto>> FindAllPeoplePaged(int page, int size)
     {
@@ -20,18 +22,24 @@ public class MemoryPersonService(IContactUnitOfWork unitOfWork) : IPersonService
         return person == null ? null : PersonDto.FromEntity(person);
     }
 
-    public Task<PersonDto> CreatePerson(CreatePersonDto dto)
+    public async Task CreatePerson(CreatePersonDto dto)
     {
-        throw new NotImplementedException();
+        var person = mapper.Map<CreatePersonDto, Person>(dto);
+        await unitOfWork.Persons.AddAsync(person);
     }
 
-    public Task UpdatePerson(Guid id, UpdatePersonDto dto)
+    public async Task UpdatePerson(Guid id, UpdatePersonDto dto)
     {
-        throw new NotImplementedException();
+        var person = mapper.Map<UpdatePersonDto, Person>(dto);
+        person.Id = id;
+        await unitOfWork.Persons.AddAsync(person);
     }
 
-    public Task DeletePerson(Guid id)
+    public async Task DeletePerson(Guid id)
     {
-        throw new NotImplementedException();
+        var person = await unitOfWork.Persons.FindByIdAsync(id);
+        
+        if (person != null)
+            await unitOfWork.Persons.RemoveByIdAsync(person.Id);
     }
 }
