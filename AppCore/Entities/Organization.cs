@@ -10,9 +10,5 @@ public class Organization : Contact
 
     public List<Person> Members { get; set; } = new();
     public Person? PrimaryContact { get; set; }
-
-    public override string GetDisplayName()
-    {
-        return Name;
-    }
+    
 }

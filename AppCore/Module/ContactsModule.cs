@@ -1,3 +1,4 @@
+using AppCore.Mapper;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;

@@ -10,6 +10,5 @@ public abstract class Contact : EntityBase
     public DateTime? UpdatedAt { get; set; }
     public List<Tag> Tags { get; set; } = [];
     public List<Note> Notes { get; set; } = [];
-
-    public abstract string GetDisplayName();
+    
 }

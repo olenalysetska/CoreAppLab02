@@ -6,6 +6,7 @@ public record PersonDto : ContactDtos
 {
     public string FirstName { get; init; } = string.Empty;
     public string LastName { get; init; } = string.Empty;
+    public string? MiddleName { get; set; }
     public string? Position { get; init; }
     public DateTime? BirthDate { get; init; }
     public Gender Gender { get; init; }
@@ -18,6 +19,7 @@ public record PersonDto : ContactDtos
             Id = person.Id,
             FirstName = person.FirstName,
             LastName = person.LastName,
+            MiddleName = person.MiddleName,
             Email = person.Email,
             Phone = person.Phone,
             Position = person.Position,
