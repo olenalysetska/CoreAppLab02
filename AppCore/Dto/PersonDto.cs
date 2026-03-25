@@ -11,6 +11,7 @@ public record PersonDto : ContactDtos
     public DateTime? BirthDate { get; init; }
     public Gender Gender { get; init; }
     public Guid? EmployerId { get; init; }
+    public List<NoteDto> Notes { get; init; } = new(); // <-- add this
 
     public static PersonDto FromEntity(Person person)
     {
@@ -29,6 +30,11 @@ public record PersonDto : ContactDtos
             CreatedAt = person.CreatedAt,
             Tags = person.Tags.Select(t => t.Name).ToList(),
             EmployerId = person.Employer?.Id,
+            Notes = person.Notes?.Select(n => new NoteDto // <-- add this
+            {
+                Id = n.Id,
+                Content = n.Content
+            }).ToList() ?? new List<NoteDto>(),
             Address = new AddressDto(
                 person.Address.Street,
                 person.Address.City,
@@ -37,27 +43,4 @@ public record PersonDto : ContactDtos
                 person.Address.Type)
         };
     }
-}
-
-public record CreatePersonDto(
-    string FirstName,
-    string LastName,
-    string Email,
-    string Phone,
-    string? Position,
-    DateTime? BirthDate,
-    Gender Gender,
-    Guid? EmployerId,
-    AddressDto? Address);
-
-public record UpdatePersonDto(
-    string? FirstName,
-    string? LastName,
-    string? Email,
-    string? Phone,
-    string? Position,
-    DateTime? BirthDate,
-    Gender? Gender,
-    Guid? EmployerId,
-    AddressDto? Address,
-    ContactStatus? Status);
+};
