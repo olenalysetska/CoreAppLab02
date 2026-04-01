@@ -57,7 +57,7 @@ public class ContactsController(IPersonService service) : ControllerBase
         [FromRoute] Guid contactId,
         [FromBody] CreateNoteDto dto)
     {
-        var note = await service.AddNoteToPerson(contactId, Dto);
+        var note = await service.AddNoteToPerson(contactId, dto);
         return CreatedAtAction(nameof(GetNotes), new { contactId }, note);
     }
 

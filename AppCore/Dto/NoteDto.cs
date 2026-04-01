@@ -1,8 +1,15 @@
+using AppCore.Entities;
+
 namespace AppCore.Dto;
 
-public class NoteDto
+public record NoteDto(
+    Guid Id,
+    string Content,
+    DateTime CreatedAt,
+    string CreatedBy)
 {
-    public Guid Id { get; set; }
-    public string Content { get; set; } = string.Empty;
-
+    public static NoteDto FromEntity(Note note) =>
+        new(note.Id, note.Content, note.CreatedAt, note.CreatedBy);
 }
+
+

@@ -8,7 +8,7 @@ public class ContactsMappingProfile : Profile
 {
     public ContactsMappingProfile()
     {
-        // (Person -> PersonDto)
+       
         CreateMap<Person, PersonDto>();
         // Говорим, как собрать FullName из двух кусков
 

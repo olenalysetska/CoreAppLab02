@@ -1,11 +1,9 @@
-using AddCore.Dto;
 using AppCore.Dto;
 using AppCore.Entities;
 using AppCore.Repositories;
 using AppCore.Services;
 using AutoMapper;
 using AppCore.Exceptions;
-using AppCore.NoteDto;
 
 namespace Infrastructure.Services;
 
