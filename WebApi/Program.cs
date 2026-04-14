@@ -1,6 +1,7 @@
 using AppCore.Repositories;
 using AppCore.Services;
 using AutoMapper;
+using Infrastructure;
 using Infrastructure.Memory;
 using Infrastructure.Services;
 
@@ -18,6 +19,9 @@ builder.Services.AddSingleton<IOrganizationRepository, MemoryOrganizationReposit
 builder.Services.AddSingleton<IContactUnitOfWork, MemoryContactUnitOfWork>();
 
 builder.Services.AddSingleton<IPersonService, MemoryPersonService>();
+
+builder.Services.AddContactsEfModule(builder.Configuration);
+builder.Services.AddContactsCoreModule(builder.Configuration); 
 
 var app = builder.Build();
 
