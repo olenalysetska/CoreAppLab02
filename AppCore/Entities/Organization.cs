@@ -4,7 +4,7 @@ public class Organization : Contact
 {
     public string Name { get; set; } = string.Empty;
     public OrganizationType Type { get; set; }
-    public string? KRS { get; set; }
+    public string? OrganizationKRS { get; set; }  // było: KRS
     public string? Website { get; set; }
     public string? Mission { get; set; }
 

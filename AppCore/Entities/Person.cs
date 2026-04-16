@@ -13,5 +13,10 @@ public class Person : Contact
     public DateTime? BirthDate { get; set; }
     public Gender Gender { get; set; }
     public string? Position { get; set; }
+
+    // Nawigacja do pracodawcy (firma)
     public Company? Employer { get; set; }
+
+   
+    public Organization? Organization { get; set; }
 }
