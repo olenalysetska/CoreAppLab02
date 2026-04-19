@@ -1,3 +1,4 @@
+using AppCore.Entities;
 using AppCore.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,7 +9,7 @@ public class CrmUser : IdentityUser, ISystemUser
     public required string FullName { get; set; }
     public override required string Email { get; set; }
     public required string Department { get; set; }
-    public required SystemUserStatus Status { get; set; }
+    public required AppCore.Entities.SystemUserStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? LastLoginAt { get; private set; }
     public DateTime? DeactivatedAt { get; private set; }

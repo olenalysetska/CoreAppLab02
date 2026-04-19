@@ -1,10 +1,13 @@
+using AppCore;
 using AppCore.Entities;
 using AppCore.Identity;
 using Infrastructure.EntityFramework.Entities;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using SystemUserStatus = AppCore.Entities.SystemUserStatus;
 
 namespace Infrastructure.EntityFramework.Context;
 
@@ -13,6 +16,7 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
     public DbSet<Person> People { get; set; }
     public DbSet<Company> Companies { get; set; }
     public DbSet<Organization> Organizations { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -1,6 +1,7 @@
 using AppCore.Repositories;
 using AppCore.Services;
 using Infrastructure;
+using Infrastructure.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Services.AddContactsModule(builder.Configuration);
 
 // (baza danych, Identity, repozytoria)
 builder.Services.AddContactsEfModule(builder.Configuration);
+
+builder.Services.AddSingleton<JwtSettings>();
+builder.Services.AddJwt(new JwtSettings(builder.Configuration));
 
 var app = builder.Build();
 

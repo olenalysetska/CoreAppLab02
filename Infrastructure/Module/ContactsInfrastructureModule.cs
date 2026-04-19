@@ -1,66 +1,80 @@
+using AppCore.Authorization;
+using AppCore.Data;
 using AppCore.Repositories;
 using AppCore.Services;
+using Infrastructure.Data;
 using Infrastructure.EntityFramework.Context;
 using Infrastructure.EntityFramework.Entities;
 using Infrastructure.EntityFramework.Repositories;
 using Infrastructure.EntityFramework.UnitOfWork;
-using Infrastructure.Memory;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Identity;
+using Infrastructure.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure;
+namespace Infrastructure; 
 
 public static class ContactsInfrastructureModule
 {
- 
-    /// Rejestruje moduł EF z SQLite i Identity.
-  
     public static IServiceCollection AddContactsEfModule(
-        this IServiceCollection services,
+        this IServiceCollection services, 
         IConfiguration configuration)
     {
+      
         services.AddScoped<IPersonRepository, EfPersonRepository>();
         services.AddScoped<ICompanyRepository, EfCompanyRepository>();
         services.AddScoped<IOrganizationRepository, EfOrganizationRepository>();
         services.AddScoped<IContactUnitOfWork, EfContactsUnitOfWork>();
 
         services.AddDbContext<ContactsDbContext>(options =>
-            options.UseSqlite(
-                configuration.GetConnectionString("CrmDb")));
+            options.UseSqlite(configuration.GetConnectionString("CrmDb")));
 
-        services.AddIdentity<CrmUser, CrmRole>(options =>
-            {
-                options.Password.RequiredLength = 8;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = true;
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-            })
-            .AddEntityFrameworkStores<ContactsDbContext>()
-            .AddDefaultTokenProviders();
+        services.AddIdentity<CrmUser, CrmRole>(options => { /* твои настройки Identity */ })
+            .AddEntityFrameworkStores<ContactsDbContext>();
 
-        services.AddScoped<IPersonService, PersonService>();
+      
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IDataSeeder, IdentityDbSeeder>();
+      
 
         return services;
     }
 
-   
-    /// Rejestruje moduł 
-   
-    public static IServiceCollection AddContactsMemoryModule(
-        this IServiceCollection services)
+    public static IServiceCollection AddJwt(this IServiceCollection services, JwtSettings jwtOptions)
     {
-        services.AddSingleton<IPersonRepository, MemoryPersonRepository>();
-        services.AddSingleton<ICompanyRepository, MemoryCompanyRepository>();
-        services.AddSingleton<IOrganizationRepository, MemoryOrganizationRepository>();
-        services.AddSingleton<IContactUnitOfWork, MemoryContactUnitOfWork>();
-        services.AddSingleton<IPersonService, MemoryPersonService>();
+        services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidAudience = jwtOptions.Audience,
+                    IssuerSigningKey = jwtOptions.GetSymmetricKey(),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+        services.AddAuthorization(options =>
+        {
+            
+            options.AddPolicy(CrmPolicies.AdminOnly.ToString(), policy =>
+                policy.RequireRole("Administrator"));
+            
+
+        });
 
         return services;
     }
 }
+

@@ -8,23 +8,8 @@ public interface ISystemUser
     string LastName { get; }
     string FullName { get; }
     string Department { get; }
-    SystemUserStatus Status { get; }
+    Entities.SystemUserStatus Status { get; }
     DateTime CreatedAt { get; }
 }
 
-public enum SystemUserStatus
-{
-    Active,
-    Inactive,
-    Locked,
-    PendingActivation
-}
 
-public enum UserRole
-{
-    Administrator,
-    SalesManager,
-    Salesperson,
-    SupportAgent,
-    ReadOnly
-}
