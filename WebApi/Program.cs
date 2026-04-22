@@ -15,7 +15,7 @@ builder.Services.AddContactsModule(builder.Configuration);
 builder.Services.AddContactsEfModule(builder.Configuration);
 
 builder.Services.AddSingleton<JwtSettings>();
-builder.Services.AddJwt(new JwtSettings(builder.Configuration));
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
